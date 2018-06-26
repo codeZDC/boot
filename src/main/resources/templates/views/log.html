@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+    <style>
+        .main-content{
+            min-height: 900px;
+            padding: 20px 0 10px 20px;
+        }
+        .site-h1{
+            margin-bottom: 20px;
+            line-height: 60px;
+            padding-bottom: 10px;
+            color: #393D49;
+            border-bottom: 1px solid #eee;
+            font-size: 28px;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+<div class="main-content">
+    <h1 class="site-h1">登录日志列表</h1>
+    <blockquote class="layui-elem-quote">
+            登录日志只是在记录每一个人登录的时间与地点;
+    </blockquote>
+
+    <table id="data_table" lay-filter="test"></table>
+
+    <script th:src="@{/plugins/layui/layui.js}"></script>
+
+</div>
+</body>
+<script type="text/javascript">
+    var path = parent.contextPath;
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#data_table'
+            ,url: path + 'log/list' //数据接口
+            ,page: true //开启分页
+            ,request: {
+                pageName: 'pageNum'
+                ,limitName: 'pageSize'
+            }
+            ,cols: [[{field: 'id', title: 'ID', width:80, sort: true, fixed: 'left',align:'center'},
+                    {field: 'ip', title: '登录IP'},
+                    {field: 'createdTime', title: '登录时间'}]
+            ]
+        });
+    });
+</script>
+</html>
